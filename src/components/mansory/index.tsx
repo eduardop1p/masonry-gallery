@@ -13,7 +13,10 @@ interface Props {
 export default function MasonryPin({ photos }: Props) {
   const [columnCount, setColumnCount] = useState(6);
   const [columnWidth, setColumnWidth] = useState(6.5);
-  const maxWidth1250 = useMediaQuery({ maxWidth: 1250 });
+  const maxWidth1400 = useMediaQuery({ maxWidth: 1400 });
+  const maxWidth1100 = useMediaQuery({ maxWidth: 1100 });
+  const maxWidth850 = useMediaQuery({ maxWidth: 850 });
+  const maxWidth500 = useMediaQuery({ maxWidth: 500 });
 
   const newPhotos = [];
   const photosArrayLength = Math.ceil(photos.length / columnCount);
@@ -42,22 +45,35 @@ export default function MasonryPin({ photos }: Props) {
   }, [handleLoadImg]);
 
   const handleMediaQuery = useCallback(() => {
-    if (maxWidth1250) {
+    if (maxWidth500) {
+      setColumnCount(2);
+      setColumnWidth(2.5);
+      handleGetAllPin();
+    } else if (maxWidth850) {
+      setColumnCount(3);
+      setColumnWidth(3.5);
+      handleGetAllPin();
+    } else if (maxWidth1100) {
+      setColumnCount(4);
+      setColumnWidth(4.5);
+      handleGetAllPin();
+    } else if (maxWidth1400) {
       setColumnCount(5);
       setColumnWidth(5.5);
       handleGetAllPin();
-      return;
+    } else {
+      setColumnCount(6);
+      setColumnWidth(6.5);
+      handleGetAllPin();
     }
-    setColumnCount(6);
-    setColumnWidth(6.5);
-    handleGetAllPin();
-  }, [maxWidth1250, handleGetAllPin]);
+  }, [maxWidth1400, maxWidth1100, maxWidth850, maxWidth500, handleGetAllPin]);
 
   useEffect(() => {
     window.onresize = () => {
       handleGetAllPin();
+      // handleMediaQuery();
     };
-  }, [handleGetAllPin]);
+  }, [handleGetAllPin, handleMediaQuery]);
 
   useEffect(() => {
     handleMediaQuery();

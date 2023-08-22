@@ -23,7 +23,7 @@ export const MasonryContainer = styled.div<Props>`
       & > .pin-container {
         position: relative;
         margin-bottom: ${$marginColumn};
-        transition: height 5ms linear;
+        transition: height 30ms linear;
 
         & > .pin {
           border-radius: 1rem;
