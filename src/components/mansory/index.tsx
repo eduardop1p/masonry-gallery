@@ -24,10 +24,9 @@ export default function MasonryPin({ photos }: Props) {
   const handleLoadImg = useCallback(
     (img: HTMLImageElement) => {
       const parent = img.parentElement as HTMLDivElement;
-      const windowWidth = window.screen.width;
+      const windowWidth = window.innerWidth;
       const aspectoRatio = img.naturalWidth / img.naturalHeight;
       const parentWidth = windowWidth / columnWidth;
-
       const parentHeight = parentWidth / aspectoRatio;
 
       parent.style.width = `${parentWidth.toFixed(0)}px`;

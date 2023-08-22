@@ -10,7 +10,7 @@ export const MasonryContainer = styled.div<Props>`
     display: flex;
     justify-content: center;
     /* min-width: 1519px; */
-    /* padding: 0 1rem; */
+    /* margin: 0 1rem; */
 
     & > :not(:last-child) {
       margin-right: ${$marginColumn};
@@ -23,7 +23,7 @@ export const MasonryContainer = styled.div<Props>`
       & > .pin-container {
         position: relative;
         margin-bottom: ${$marginColumn};
-        transition: height 50ms linear;
+        transition: height 5ms linear;
 
         & > .pin {
           border-radius: 1rem;

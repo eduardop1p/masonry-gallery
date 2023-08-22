@@ -9,6 +9,7 @@ export default async function Page() {
   const response = (await client.photos.search({
     query: 'car',
     per_page: 24,
+    page: 1,
   })) as any;
   return (
     <div>
