@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import Image from 'next/image';
@@ -70,10 +71,10 @@ export default function MasonryPin({ photos }: Props) {
 
   useEffect(() => {
     window.onresize = () => {
-      handleGetAllPin();
-      // handleMediaQuery();
+      // handleGetAllPin();
+      handleMediaQuery();
     };
-  }, [handleGetAllPin, handleMediaQuery]);
+  }, [handleMediaQuery]);
 
   useEffect(() => {
     handleMediaQuery();
