@@ -15,7 +15,8 @@ export default function MasonryPin({ photos }: Props) {
   const [columnCount, setColumnCount] = useState(6);
   const [columnWidth, setColumnWidth] = useState(6.5);
   const maxWidth1400 = useMediaQuery({ maxWidth: 1400 });
-  const maxWidth1100 = useMediaQuery({ maxWidth: 1100 });
+  const maxWidth1200 = useMediaQuery({ maxWidth: 1200 });
+  const maxWidth1050 = useMediaQuery({ maxWidth: 1050 });
   const maxWidth850 = useMediaQuery({ maxWidth: 850 });
   const maxWidth500 = useMediaQuery({ maxWidth: 500 });
 
@@ -50,26 +51,37 @@ export default function MasonryPin({ photos }: Props) {
   const handleMediaQuery = useCallback(() => {
     if (maxWidth500) {
       setColumnCount(2);
-      setColumnWidth(2.3);
+      setColumnWidth(2.2);
       handleGetAllPin();
     } else if (maxWidth850) {
       setColumnCount(3);
-      setColumnWidth(3.5);
+      setColumnWidth(3.3);
       handleGetAllPin();
-    } else if (maxWidth1100) {
+    } else if (maxWidth1050) {
       setColumnCount(4);
-      setColumnWidth(4.5);
+      setColumnWidth(4.35);
+      handleGetAllPin();
+    } else if (maxWidth1200) {
+      setColumnCount(4);
+      setColumnWidth(4.3);
       handleGetAllPin();
     } else if (maxWidth1400) {
       setColumnCount(5);
-      setColumnWidth(5.5);
+      setColumnWidth(5.4);
       handleGetAllPin();
     } else {
       setColumnCount(6);
       setColumnWidth(6.5);
       handleGetAllPin();
     }
-  }, [maxWidth1400, maxWidth1100, maxWidth850, maxWidth500, handleGetAllPin]);
+  }, [
+    maxWidth1400,
+    maxWidth1200,
+    maxWidth1050,
+    maxWidth850,
+    maxWidth500,
+    handleGetAllPin,
+  ]);
 
   useEffect(() => {
     handleMediaQuery();
