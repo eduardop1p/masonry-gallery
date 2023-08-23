@@ -50,7 +50,7 @@ export default function MasonryPin({ photos }: Props) {
   const handleMediaQuery = useCallback(() => {
     if (maxWidth500) {
       setColumnCount(2);
-      setColumnWidth(2.5);
+      setColumnWidth(2.3);
       handleGetAllPin();
     } else if (maxWidth850) {
       setColumnCount(3);
@@ -74,10 +74,9 @@ export default function MasonryPin({ photos }: Props) {
   useEffect(() => {
     handleMediaQuery();
     window.onresize = () => {
-      // handleGetAllPin();
       handleMediaQuery();
     };
-  }, [handleMediaQuery]);
+  }, [handleMediaQuery, columnCount]);
 
   // useEffect(() => {
   // }, [handleMediaQuery]);
