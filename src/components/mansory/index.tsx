@@ -14,11 +14,10 @@ interface Props {
 export default function MasonryPin({ photos }: Props) {
   const [columnCount, setColumnCount] = useState(6);
   const [columnWidth, setColumnWidth] = useState(6.5);
-  const maxWidth1515 = useMediaQuery({ maxWidth: 1515 });
-  const maxWidth1270 = useMediaQuery({ maxWidth: 1270 });
-  const maxWidth1020 = useMediaQuery({ maxWidth: 1020 });
-  const maxWidth770 = useMediaQuery({ maxWidth: 770 });
-  const maxWidth520 = useMediaQuery({ maxWidth: 520 });
+  const maxWidth1400 = useMediaQuery({ maxWidth: 1400 });
+  const maxWidth1100 = useMediaQuery({ maxWidth: 1100 });
+  const maxWidth850 = useMediaQuery({ maxWidth: 850 });
+  const maxWidth500 = useMediaQuery({ maxWidth: 500 });
 
   const newPhotos = [];
   const photosArrayLength = Math.ceil(photos.length / columnCount);
@@ -26,18 +25,21 @@ export default function MasonryPin({ photos }: Props) {
     newPhotos.push(photos.slice(i, i + photosArrayLength));
   }
 
-  const handleLoadImg = useCallback((img: HTMLImageElement) => {
-    const parent = img.parentElement as HTMLDivElement;
-    const windowWidth = window.innerWidth;
-    const aspectoRatio = img.naturalWidth / img.naturalHeight;
-    // const parentWidth = windowWidth / columnWidth;
-    const parentWidth = 233;
-    const parentHeight = parentWidth / aspectoRatio;
+  const handleLoadImg = useCallback(
+    (img: HTMLImageElement) => {
+      const windowWidth = window.innerWidth;
+      const aspectoRatio = img.naturalWidth / img.naturalHeight;
 
-    parent.style.width = `${parentWidth.toFixed(0)}px`;
-    parent.style.width = `100%`;
-    parent.style.height = `${parentHeight.toFixed(0)}px`;
-  }, []);
+      const parent = img.parentElement as HTMLDivElement;
+      const parentWidth = windowWidth / columnWidth;
+      const parentHeight = parentWidth / aspectoRatio;
+
+      // parent.style.width = `${parentWidth.toFixed(0)}px`;
+      parent.style.width = `100%`;
+      parent.style.height = `${parentHeight.toFixed(0)}px`;
+    },
+    [columnWidth]
+  );
 
   const handleGetAllPin = useCallback(() => {
     document.querySelectorAll('.pin').forEach((img: Element) => {
@@ -46,51 +48,39 @@ export default function MasonryPin({ photos }: Props) {
   }, [handleLoadImg]);
 
   const handleMediaQuery = useCallback(() => {
-    if (maxWidth520) {
-      setColumnCount(1);
-      // setColumnWidth(1.5);
-      // handleGetAllPin();
-    }
-    if (maxWidth770) {
+    if (maxWidth500) {
       setColumnCount(2);
-      // setColumnWidth(2.5);
-      // handleGetAllPin();
-      return;
-    }
-    if (maxWidth1020) {
+      setColumnWidth(2.5);
+      handleGetAllPin();
+    } else if (maxWidth850) {
       setColumnCount(3);
-      // setColumnWidth(3.5);
-      // handleGetAllPin();
-      return;
-    }
-    if (maxWidth1270) {
+      setColumnWidth(3.5);
+      handleGetAllPin();
+    } else if (maxWidth1100) {
       setColumnCount(4);
-      // setColumnWidth(4.5);
-      // handleGetAllPin();
-      return;
-    }
-    if (maxWidth1515) {
+      setColumnWidth(4.5);
+      handleGetAllPin();
+    } else if (maxWidth1400) {
       setColumnCount(5);
-      // setColumnWidth(5.5);
-      // handleGetAllPin();
-      return;
+      setColumnWidth(5.5);
+      handleGetAllPin();
+    } else {
+      setColumnCount(6);
+      setColumnWidth(6.5);
+      handleGetAllPin();
     }
-    setColumnCount(6);
-    // setColumnWidth(6.5);
-    // handleGetAllPin();
-  }, [maxWidth1515, maxWidth1270, maxWidth1020, maxWidth770, maxWidth520]);
-
-  // useEffect(() => {
-  //   handleMediaQuery();
-  //   window.onresize = () => {
-  //     handleGetAllPin();
-  //     handleMediaQuery();
-  //   };
-  // }, [handleGetAllPin, handleMediaQuery]);
+  }, [maxWidth1400, maxWidth1100, maxWidth850, maxWidth500, handleGetAllPin]);
 
   useEffect(() => {
     handleMediaQuery();
+    window.onresize = () => {
+      // handleGetAllPin();
+      handleMediaQuery();
+    };
   }, [handleMediaQuery]);
+
+  // useEffect(() => {
+  // }, [handleMediaQuery]);
 
   return (
     <div>
