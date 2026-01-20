@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import Image from 'next/image';
+import { default as NextImage } from 'next/image';
 import { useEffect, useState, useCallback } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { useSearchParams } from 'next/navigation';
 
 import { MasonryContainer } from './styled';
 
@@ -12,6 +13,9 @@ interface Props {
 }
 
 export default function MasonryPin({ photos }: Props) {
+  const [loaderPin, setLoaderPin] = useState(true);
+  const serachParam = useSearchParams();
+
   const [columnCount, setColumnCount] = useState(6);
   const [columnWidth, setColumnWidth] = useState(6.5);
   const maxWidth1400 = useMediaQuery({ maxWidth: 1400 });
@@ -50,7 +54,6 @@ export default function MasonryPin({ photos }: Props) {
 
   const handleMediaQuery = useCallback(() => {
     if (maxWidth500) {
-      setColumnCount(2);
       setColumnWidth(2.2);
       handleGetAllPin();
     } else if (maxWidth850) {
@@ -84,14 +87,16 @@ export default function MasonryPin({ photos }: Props) {
   ]);
 
   useEffect(() => {
-    handleMediaQuery();
+    // handleGetAllPin();
+    // handleMediaQuery();
     window.onresize = () => {
       handleMediaQuery();
     };
-  }, [handleMediaQuery, columnCount]);
+  }, [handleMediaQuery, handleGetAllPin]);
 
-  // useEffect(() => {
-  // }, [handleMediaQuery]);
+  useEffect(() => {
+    // if (loaderPin === photos.length)
+  }, [photos, loaderPin]);
 
   return (
     <div>
@@ -108,21 +113,49 @@ export default function MasonryPin({ photos }: Props) {
         {newPhotos.map((arrays: any, index: number) => (
           <div key={index} className="masonry-column">
             {arrays.map((value: any) => (
-              <div key={value.id} className="pin-container">
-                <Image
-                  className="pin"
-                  src={value.src.medium}
-                  alt={value.alt}
-                  loading="eager"
-                  fill
-                  sizes="100%"
-                  onLoadingComplete={img => handleLoadImg(img)}
-                />
+              <div className="pin-info" key={value.id}>
+                <div className="pin-container">
+                  <NextImage
+                    className="pin"
+                    src={value.src.medium}
+                    alt={value.alt}
+                    loading="eager"
+                    fill
+                    onLoadingComplete={img => {
+                      // img.nextSibling?.remove();
+                      handleLoadImg(img);
+                    }}
+                    sizes="100%"
+                  />
+                  <Loading pinH={value.src.medium} />
+                </div>
+                <h4 title={value.alt}>{value.alt}</h4>
               </div>
             ))}
           </div>
         ))}
       </MasonryContainer>
+    </div>
+  );
+}
+
+function Loading({ pinH }: { pinH: any }) {
+  console.log(pinH);
+  return (
+    <div
+      style={{
+        width: `100%`,
+        height: `${pinH}px`,
+        background: '#333',
+        borderRadius: '1rem',
+        position: 'absolute',
+        zIndex: '2',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <p style={{ color: '#fff' }}>Carregando...</p>
     </div>
   );
 }

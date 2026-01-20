@@ -21,13 +21,29 @@ export const MasonryContainer = styled.div<Props>`
       width: calc(100% / ${$columnWidth});
       flex: none;
 
-      & > .pin-container {
-        position: relative;
+      & > .pin-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         margin-bottom: ${$marginColumn};
-        /* transition: height 30ms linear; */
 
-        & > .pin {
-          border-radius: 1rem;
+        & > .pin-container {
+          position: relative;
+          margin-bottom: 8px;
+          /* transition: height 30ms linear; */
+
+          & > .pin {
+            border-radius: 1rem;
+          }
+        }
+
+        & > h4 {
+          display: -webkit-box;
+          overflow: hidden;
+          width: 100%;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          text-overflow: ellipsis;
         }
       }
     }
